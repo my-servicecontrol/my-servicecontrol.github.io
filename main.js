@@ -155,7 +155,7 @@ function tasksTable(data) {
 var fil = [];
 function myFunction() {
   fil.length = 0;
-  var input, filter, table, tr, td, td1, td2, td3, td4, td5, td6, i;
+  var input, filter, table, tr, td, td1, td2, td3, td4, td5, i;
   input = document.getElementById("myInput");
   filter = input.value.toUpperCase();
   table = document.getElementById("myTable");
@@ -171,7 +171,6 @@ function myFunction() {
     td3 = tr[i].getElementsByTagName("td")[3];
     td4 = tr[i].getElementsByTagName("td")[4];
     td5 = tr[i].getElementsByTagName("td")[5];
-    td6 = tr[i].getElementsByTagName("td")[6];
     if (td) {
       if (
         td.innerHTML.toUpperCase().indexOf(filter) > -1 ||
@@ -179,8 +178,7 @@ function myFunction() {
         td2.innerHTML.toUpperCase().indexOf(filter) > -1 ||
         td3.innerHTML.toUpperCase().indexOf(filter) > -1 ||
         td4.innerHTML.toUpperCase().indexOf(filter) > -1 ||
-        td5.innerHTML.toUpperCase().indexOf(filter) > -1 ||
-        td6.innerHTML.toUpperCase().indexOf(filter) > -1
+        td5.innerHTML.toUpperCase().indexOf(filter) > -1
       ) {
         tr[i].style.display = "";
       } else {
