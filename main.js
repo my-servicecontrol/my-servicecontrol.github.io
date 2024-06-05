@@ -1,31 +1,26 @@
 var myApp =
-  "https://script.google.com/macros/s/AKfycbzY3U2AMydGhr2UQ9Q1IjlrvRSZZcMY-mkQiS3ftei8tRlMneei3TEfaJoG-pOAsmwM_A/exec";
-var tasks = "1nZy_IhE22PwOqnyvSRlojmlaluxdrX7sPb2DQfvKKao";
-var sName = "Detailing NEMO";
+  "https://script.google.com/macros/s/AKfycbyz5fykkEUVredK-FFct08Rt3JFLUkMiNILqAN2qHE5SUQTWXBpZObzcFPQW-8MMQp-/exec";
+var tasks = "1snKovzF7kIjzO6xkNNef-pXOVB6nrFoy35CjW6rm7sY";
+var sName = "Factory SL";
 //var eDate = "Активно до: 18.08.2024";
-$("#offcanvasNavbarLabel").html(sName);
+//$("#offcanvasNavbarLabel").html(sName);
 //$("#dateend").html(eDate);
 $(document).ready(function () {
   loadTasks();
 });
-var vStatus = [],
-  uStatus = [];
+var vStatus = [];
 const triggerTabList = document.querySelectorAll("#nav-tab button");
 triggerTabList.forEach((triggerEl) => {
   triggerEl.addEventListener("click", (event) => {
     vStatus.length = 0;
-    uStatus.length = 0;
-    if (triggerEl.innerText == "В роботі") {
-      vStatus.push("в работе");
-      uStatus.push("в роботі");
+    if (triggerEl.innerText == "Angebot") {
+      vStatus.push("Angebot");
     }
-    if (triggerEl.innerText == "Закриті") {
-      vStatus.push("сделано");
-      uStatus.push("виконано");
+    if (triggerEl.innerText == "Vollendet") {
+      vStatus.push("Vollendet");
     }
-    if (triggerEl.innerText == "Скасовані") {
-      vStatus.push("в архив");
-      uStatus.push("в архів");
+    if (triggerEl.innerText == "Zum Archiv") {
+      vStatus.push("Zum Archiv");
     }
     $("#myTable tbody").html(
       `<span class="spinner-grow spinner-grow-sm text-success" role="status" aria-hidden="true"></span>`
@@ -33,8 +28,7 @@ triggerTabList.forEach((triggerEl) => {
     loadTasks();
   });
 });
-vStatus.push("в работе");
-uStatus.push("в роботі");
+vStatus.push("Angebot");
 
 function loadTasks() {
   googleQuery(tasks, "0", "D:AH", `SELECT *`);
@@ -87,21 +81,20 @@ function tasksTable(data) {
     var trr = ``;
     for (i = data.Tf.length - 1; i >= 0; i--) {
       var colorw =
-        data.Tf[i].c[4].v == "в работе" || data.Tf[i].c[4].v == "в роботі"
-          ? `class="table-success" title="в роботі"`
+        data.Tf[i].c[4].v == "Angebot"
+          ? `class="table-success" title="Angebot"`
           : ``;
       var colorp =
         myMonth - data.Tf[i].c[0].f.split`.`[1] > 1
           ? `class="table-danger" title="прострочено"`
           : ``;
-      var textColor = vStatus == "в архив" ? `text-secondary` : ``;
+      var textColor = vStatus == "Zum Archiv" ? `text-secondary` : ``;
       var linkColor =
-        vStatus == "в архив" ? `class="link-secondary"` : `class="link-dark"`;
+        vStatus == "Zum Archiv"
+          ? `class="link-secondary"`
+          : `class="link-dark"`;
 
-      if (
-        (data.Tf[i].c[4].v == vStatus || data.Tf[i].c[4].v == uStatus) &&
-        data.Tf[i].c[24].v == sName
-      ) {
+      if (data.Tf[i].c[4].v == vStatus && data.Tf[i].c[24].v == sName) {
         tr += `<tr ${colorw}>
         <td><a target="_blank" href="${data.Tf[i].c[2].v}" ${linkColor}>${
           data.Tf[i].c[3].v
@@ -125,7 +118,7 @@ function tasksTable(data) {
       if (
         (data.Tf[i].c[4].v == "предложение" ||
           data.Tf[i].c[4].v == "пропозиція") &&
-        vStatus == "в работе" &&
+        vStatus == "Angebot" &&
         data.Tf[i].c[24].v == sName
       ) {
         trr += `<tr ${colorp}>
